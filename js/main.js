@@ -3,11 +3,11 @@ const getRandomNumber = (min, max) => {
   max = Math.floor(max);
 
   if (min < 0) {
-    return alert('Ошибка! Минимальное значение меньше 0!')
+    throw new Error('Ошибка! Минимальное значение меньше 0!')
   }
 
   if (min >= max) {
-    return alert('Ошибка! Минимальное значение не меньше максимального! Проверьте введённые параметры!')
+    throw new Error('Ошибка! Минимальное значение не меньше максимального! Проверьте введённые параметры!')
   }
 
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -16,11 +16,11 @@ const getRandomNumber = (min, max) => {
 const getRandomFloat = (min, max, accuracy) => {
 
   if (min < 0) {
-    return alert('Ошибка! Минимальное значение меньше 0!')
+    throw new Error('Ошибка! Минимальное значение меньше 0!')
   }
 
   if (min >= max) {
-    return alert('Ошибка! Минимальное значение не меньше максимального! Проверьте введённые параметры!')
+    throw new Error('Ошибка! Минимальное значение не меньше максимального! Проверьте введённые параметры!')
   }
 
   let number = Math.random() * (max - min) + min;
