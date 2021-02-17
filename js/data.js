@@ -30,8 +30,23 @@ const PHOTOS_LINK = [
 
 const ADS_COUNT = 10;
 
+const PropertyType = (type) => {
+  switch (type) {
+    case 'palace':
+      return 'Дворец';
+    case 'bungalow':
+      return 'Бунгало';
+    case 'house':
+      return 'Дом';
+    case 'flat':
+      return 'Квартира';
+    default:
+      return 'Недвижимость';
+  }
+}
+
 const createAd = () => {
-  const avatarUrl = 'img/avatar/user0' + getRandomNumber(1, 8) + '.png';
+  const avatarUrl = 'img/avatars/user0' + getRandomNumber(1, 8) + '.png';
   const locationX = getRandomFloat(35.65000, 35.70000, 5);
   const locationY = getRandomFloat(139.70000, 139.80000, 5);
 
@@ -42,8 +57,8 @@ const createAd = () => {
     },
     offer: {
       title: 'Замечательная возможность снять недвижимость!',
-      adress: '' + locationX + ', ' + locationY,
-      price: getRandomNumber(0, 100000),
+      address: '' + locationX + ', ' + locationY,
+      price: getRandomNumber(0, 30000),
       type: getRandomArrayElement(PROPERTY_TYPE),
       rooms: getRandomNumber(1, 3),
       guests: getRandomNumber(1, 4),
@@ -60,5 +75,6 @@ const createAd = () => {
   };
 };
 
-// eslint-disable-next-line no-unused-vars
-const ads = new Array(ADS_COUNT).fill(null).map(createAd);
+const ads = () => new Array(ADS_COUNT).fill(null).map(createAd);
+
+export {ads, PropertyType};
