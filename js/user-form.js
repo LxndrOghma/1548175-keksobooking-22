@@ -1,53 +1,35 @@
-const userForm = document.querySelector('.ad-form');
-const houseTypeField = userForm.children[3];
-const priceField = userForm.children[4];
-const houseTypeList = houseTypeField.children[1];
-const checkTime = document.querySelector('.ad-form__element--time');
+const currentPrice = document.querySelector('#price')
+const houseTypeList = document.querySelector('#type');
+const checkinTime = document.querySelector('#timein');
+const chckoutTime = document.querySelector('#timeout');
 
-const PropertyMinPrice = (type) => {
-  switch (type) {
-    case 'palace':
-      return 10000;
-    case 'bungalow':
-      return 0;
-    case 'house':
-      return 5000;
-    case 'flat':
-      return 1000;
-    default:
-      return 0;
+const propertyMinPrice = (type) => {
+  const minPrice = {
+    palace: 10000,
+    bungalow: 0,
+    house: 5000,
+    flat: 1000,
   }
+  return minPrice[type];
 }
 
-const getMinPrice = (propertyType, priceField) => {
-  const currentPrice = priceField.querySelector('#price')
+currentPrice.placeholder = propertyMinPrice(houseTypeList.value);
+currentPrice.min = propertyMinPrice(houseTypeList.value);
 
-  currentPrice.placeholder = PropertyMinPrice(propertyType.value);
-  currentPrice.min = PropertyMinPrice(propertyType.value);
+houseTypeList.addEventListener('change', () => {
+  currentPrice.placeholder = propertyMinPrice(houseTypeList.value);
+  currentPrice.min = propertyMinPrice(houseTypeList.value);
+  if (currentPrice.value != '' && currentPrice.value < propertyMinPrice(houseTypeList.value)) {
+    currentPrice.value = propertyMinPrice(houseTypeList.value);
+  }
+})
 
-  houseTypeField.addEventListener('change', function() {
-    currentPrice.placeholder = PropertyMinPrice(propertyType.value);
-    currentPrice.min = PropertyMinPrice(propertyType.value);
-    if (currentPrice.value != '' && currentPrice.value < PropertyMinPrice(propertyType.value)) {
-      currentPrice.value = PropertyMinPrice(propertyType.value);
-    }
-  });
-}
+checkinTime.value = chckoutTime.value;
 
-const setTime = () => {
-  const checkinTime = checkTime.querySelector('#timein');
-  const chckoutTime = checkTime.querySelector('#timeout');
+checkinTime.addEventListener('change', function () {
+  chckoutTime.value = checkinTime.value;
+});
 
+chckoutTime.addEventListener('change', function() {
   checkinTime.value = chckoutTime.value;
-
-  checkinTime.addEventListener('change', function () {
-    chckoutTime.value = checkinTime.value;
-  });
-
-  chckoutTime.addEventListener('change', function() {
-    checkinTime.value = chckoutTime.value;
-  });
-}
-
-getMinPrice(houseTypeList, priceField);
-setTime();
+});
