@@ -1,14 +1,11 @@
-import {ads, PropertyType} from './data.js';
+import {PropertyType} from './data.js';
 
-const mapCanvas = document.querySelector('#map-canvas');
 
 const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const similarAds = ads();
-
-const adsListFragment = document.createDocumentFragment();
+// const adsListFragment = document.createDocumentFragment();
 
 const renderFeatures = (container, features) => {
   container.innerHTML = '';
@@ -47,13 +44,13 @@ const getAdvertisement = (ad) => {
   renderImages(newAd.querySelector('.popup__photos'), offer.photos);
   newAd.querySelector('.popup__avatar').src = author.avatar;
 
-  adsListFragment.appendChild(newAd);
+  // adsListFragment.appendChild(newAd);
 
-  return adsListFragment;
+  return newAd;
 };
 
-const renderAdvertisement = (container, ads) => {
-  container.appendChild(getAdvertisement(ads));
-};
+// const renderAdvertisement = (container, ads) => {
+//   container.appendChild(getAdvertisement(ads));
+// };
 
-renderAdvertisement(mapCanvas, similarAds[0]);
+export {getAdvertisement}
