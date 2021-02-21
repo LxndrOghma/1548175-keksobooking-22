@@ -5,11 +5,11 @@ const mapFiltersFormFields = mapFiltersForm.children;
 
 adForm.classList.add('ad-form--disabled');
 adFormFields.forEach((field) => {
-  field.setAttribute('disabled', 'disabled');
+  field.setAttribute('disabled', '');
 });
 
 mapFiltersForm.classList.add('map__filters--disabled');
 for (let i = 0; i < mapFiltersFormFields.length; i++) {
-  mapFiltersFormFields[i].setAttribute('disabled', 'disabled');
+  mapFiltersFormFields[i].setAttribute('disabled', '');
 }
 
