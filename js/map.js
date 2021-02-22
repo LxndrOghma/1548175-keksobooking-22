@@ -1,15 +1,17 @@
 /* global L:readonly */
-import {getActivatedForm} from './form-active.js';
+import {getActivatedForm} from './user-form.js';
 import {ads} from './data.js';
 import {getAdvertisement} from './popup.js';
 
 const addressField = document.querySelector('#address');
+const DEFAULT_LAT = 35.6729;
+const DEFAULT_LNG = 139.7564;
 
 const map = L.map('map-canvas')
   .on('load', getActivatedForm)
   .setView({
-    lat: 35.6729,
-    lng: 139.7564,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
   }, 10);
 
 L.tileLayer(
@@ -20,15 +22,15 @@ L.tileLayer(
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 })
 
 const mainMarker = L.marker(
   {
-    lat: 35.6729,
-    lng: 139.7564,
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
   },
   {
     draggable: true,
@@ -54,7 +56,7 @@ ads().forEach((ad) => {
   const {x, y} = ad.location;
 
   const icon = L.icon({
-    iconUrl: '../img/pin.svg',
+    iconUrl: 'img/pin.svg',
     iconSize: [40,40],
     iconAnchor: [20,40],
   })

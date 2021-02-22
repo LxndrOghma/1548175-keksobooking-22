@@ -5,8 +5,6 @@ const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-// const adsListFragment = document.createDocumentFragment();
-
 const renderFeatures = (container, features) => {
   container.innerHTML = '';
   features.forEach (item => {
@@ -44,13 +42,7 @@ const getAdvertisement = (ad) => {
   renderImages(newAd.querySelector('.popup__photos'), offer.photos);
   newAd.querySelector('.popup__avatar').src = author.avatar;
 
-  // adsListFragment.appendChild(newAd);
-
   return newAd;
 };
-
-// const renderAdvertisement = (container, ads) => {
-//   container.appendChild(getAdvertisement(ads));
-// };
 
 export {getAdvertisement}
