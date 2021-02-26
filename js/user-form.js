@@ -13,6 +13,25 @@ const adTitle = adForm.querySelector('#title');
 const AD_TITLE_MIN_LENGTH = 30;
 const AD_TITLE_MAX_LENGTH = 100;
 
+const minPrice = {
+  palace: 10000,
+  bungalow: 0,
+  house: 5000,
+  flat: 1000,
+}
+
+const roomValues = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0],
+}
+
+const getMinPriceValue = () => {
+  currentPrice.placeholder = minPrice[houseTypeList.value];
+  currentPrice.min = minPrice[houseTypeList.value];
+}
+
 // Form inactive
 
 adForm.classList.add('ad-form--disabled');
@@ -52,21 +71,12 @@ const onCheckOutTimeChange = () => {
 // House type and price fields link
 
 const onHouseTypeChange = () => {
-  currentPrice.placeholder = minPrice[houseTypeList.value];
-  currentPrice.min = minPrice[houseTypeList.value];
-}
-
-const minPrice = {
-  palace: 10000,
-  bungalow: 0,
-  house: 5000,
-  flat: 1000,
+  getMinPriceValue()
 }
 
 // Form restrictions
 
-currentPrice.placeholder = minPrice[houseTypeList.value];
-currentPrice.min = minPrice[houseTypeList.value];
+getMinPriceValue();
 
 houseTypeList.addEventListener('change', onHouseTypeChange);
 
@@ -94,10 +104,11 @@ const onTitleInput = () => {
 }
 
 const onCurrentPriceInput = () => {
-  if (currentPrice.value < currentPrice.min) {
-    currentPrice.setCustomValidity('Минимальная цена ' + currentPrice.min + ' руб.');
+  if (Number(currentPrice.value) < Number(currentPrice.min)) {
+    currentPrice.setCustomValidity('Минимальная цена за ночь - ' + currentPrice.min + ' руб.');
     currentPrice.classList.add('ad-form__error');
   } else {
+    currentPrice.setCustomValidity('');
     currentPrice.classList.remove('ad-form__error');
   }
 
@@ -105,30 +116,24 @@ const onCurrentPriceInput = () => {
 }
 
 const onRoomsNumberChange = () => {
-  if (roomsNumber.value === '100' && guestsNumber.value !== '0') {
-    guestsNumber.setCustomValidity('100 комнат не преднозначены для гостей');
-    roomsNumber.classList.add('ad-form__error');
-    guestsNumber.classList.add('ad-form__error');
-  } else if (guestsNumber.value > roomsNumber.value  ) {
-    guestsNumber.setCustomValidity('Выбранное количество комнат недостаточно для выбранного количества гостей');
-    roomsNumber.classList.add('ad-form__error');
-    guestsNumber.classList.add('ad-form__error');
-  } else if (roomsNumber.value !== '100' && guestsNumber.value === '0') {
-    guestsNumber.setCustomValidity('Выберете количество гостей к заселению');
-    roomsNumber.classList.add('ad-form__error');
-    guestsNumber.classList.add('ad-form__error');
-  } else {
-    guestsNumber.setCustomValidity('')
-    roomsNumber.classList.remove('ad-form__error');
-    guestsNumber.classList.remove('ad-form__error');
-  }
+  const guestsNumberOptions = guestsNumber.querySelectorAll('option');
 
-  guestsNumber.reportValidity();
+  guestsNumberOptions.forEach((option) => {
+    option.disabled = true;
+  });
+
+  roomValues[roomsNumber.value].forEach((roomAmmount) => {
+    guestsNumberOptions.forEach((option) => {
+      if (Number(option.value) === roomAmmount) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    })
+  })
 }
 
-roomsNumber.addEventListener('change', onRoomsNumberChange);
-guestsNumber.addEventListener('change', onRoomsNumberChange);
 adTitle.addEventListener('input', onTitleInput);
 currentPrice.addEventListener('input', onCurrentPriceInput);
+roomsNumber.addEventListener('change', onRoomsNumberChange);
 
 export {getActivatedForm};
