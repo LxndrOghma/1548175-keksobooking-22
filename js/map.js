@@ -1,6 +1,5 @@
 /* global L:readonly */
 import {getActivatedForm} from './user-form.js';
-import {ads} from './data.js';
 import {getAdvertisement} from './popup.js';
 
 const addressField = document.querySelector('#address');
@@ -46,38 +45,61 @@ const fixedCoordinates = () => {
   })
 }
 
-addressField.value = fixedCoordinates();
+const getAdressCoordinates = () => {
+  addressField.value = fixedCoordinates();
+};
+
+getAdressCoordinates();
 
 mainMarker.on('moveend', () => {
   addressField.value = fixedCoordinates();
 });
 
-ads().forEach((ad) => {
-  const {x, y} = ad.location;
+const renderCard = (data) => {
+  data.forEach((ad) => {
+    const {lat, lng} = ad.location;
 
-  const icon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40,40],
-    iconAnchor: [20,40],
-  })
+    const icon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [40,40],
+      iconAnchor: [20,40],
+    })
 
-  const marker = L.marker(
-    {
-      lat: x,
-      lng: y,
-    },
-    {
-      icon,
-    },
-  );
-
-  marker
-    .addTo(map)
-    .bindPopup(
-      getAdvertisement(ad),
+    const marker = L.marker(
       {
-        keepInView: true,
+        lat: lat,
+        lng: lng,
+      },
+      {
+        icon,
       },
     );
-});
 
+    marker
+      .addTo(map)
+      .bindPopup(
+        getAdvertisement(ad),
+        {
+          keepInView: true,
+        },
+      );
+  });
+};
+
+const setDefaultCoordinates = () => {
+  mainMarker.setLatLng({
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
+  });
+  map.setView({
+    lat: DEFAULT_LAT,
+    lng: DEFAULT_LNG,
+  }, 10);
+}
+
+const mapOnSubmit = () => {
+  setDefaultCoordinates();
+  getAdressCoordinates();
+}
+
+export {renderCard, mapOnSubmit};
