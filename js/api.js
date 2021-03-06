@@ -23,7 +23,7 @@ const sendData = (onSuccess, errorMessage, body) => {
       }
     })
     .catch(() => {
-      errorMessage();
+      throw new Error('Не удалось отправить данные!');
     });
 };
 
