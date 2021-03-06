@@ -1,5 +1,5 @@
 import {sendData} from './api.js';
-import {alertMessage, successMessageTemplate, errorMessageTemplate} from './utils/alerts.js';
+import {alertMessage, errorMessageTemplate} from './utils/alerts.js';
 
 const adForm = document.querySelector('.ad-form');
 const adFormFields = adForm.querySelectorAll('fieldset');
@@ -152,7 +152,6 @@ const setUserFormSubmit = (onSuccess) => {
 
     sendData(
       () => onSuccess(),
-      () => alertMessage(successMessageTemplate),
       () => alertMessage(errorMessageTemplate),
       new FormData(evt.target),
     );

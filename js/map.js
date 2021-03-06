@@ -55,7 +55,7 @@ mainMarker.on('moveend', () => {
   addressField.value = fixedCoordinates();
 });
 
-const renderCard = (data) => {
+const renderPins = (data) => {
   data.forEach((ad) => {
     const {lat, lng} = ad.location;
 
@@ -102,4 +102,4 @@ const mapOnSubmit = () => {
   getAdressCoordinates();
 }
 
-export {renderCard, mapOnSubmit};
+export {renderPins, mapOnSubmit};

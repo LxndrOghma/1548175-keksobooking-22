@@ -1,6 +1,5 @@
 import {PropertyType} from './data.js';
 
-
 const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');

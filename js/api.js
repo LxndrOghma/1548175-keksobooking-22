@@ -1,15 +1,13 @@
 const getData = (onSucces, onFail) => {
   fetch('https://22.javascript.pages.academy/keksobooking/data')
     .then((resolve) => resolve.json())
-    .then((data) => {
-      onSucces(data);
-    })
+    .then(onSucces)
     .catch(() => {
       onFail('Не удалось получить данные с сервера, попробуйте позже.')
     });
 };
 
-const sendData = (onSuccess, succesMessage, errorMessage, body) => {
+const sendData = (onSuccess, errorMessage, body) => {
   fetch(
     'https://22.javascript.pages.academy/keksobooking',
     {
@@ -20,7 +18,6 @@ const sendData = (onSuccess, succesMessage, errorMessage, body) => {
     .then((response) => {
       if (response.ok) {
         onSuccess();
-        succesMessage();
       } else {
         errorMessage();
       }
