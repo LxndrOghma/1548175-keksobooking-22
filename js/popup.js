@@ -1,17 +1,19 @@
 import {PropertyType} from './data.js';
 
-
 const similarAdsTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
 const renderFeatures = (container, features) => {
-  container.innerHTML = '';
-  features.forEach (item => {
-    const li = document.createElement('li');
-    li.classList.add('popup__feature', 'popup__feature--' + item);
-    container.appendChild(li);
-  })
+  if (features.length < 1) {
+    container.remove()
+  } else {
+    container.innerHTML = '';
+    features.forEach (item => {
+      const li = document.createElement('li');
+      li.classList.add('popup__feature', 'popup__feature--' + item);
+      container.appendChild(li);
+    })}
 }
 
 const renderImages = (container, images) => {

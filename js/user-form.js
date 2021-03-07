@@ -1,5 +1,10 @@
+import {sendData} from './api.js';
+import {alertMessage, errorMessageTemplate} from './utils/alerts.js';
+
 const adForm = document.querySelector('.ad-form');
 const adFormFields = adForm.querySelectorAll('fieldset');
+const adFeatures = document.querySelector('.features');
+const adFeaturesCheckboxes = adFeatures.querySelectorAll('input');
 const mapFiltersForm = document.querySelector('.map__filters');
 const mapFiltersFormFields = mapFiltersForm.querySelectorAll('.map__filter, .map__features');
 const currentPrice = adForm.querySelector('#price')
@@ -10,6 +15,8 @@ const addressField = adForm.querySelector('#address');
 const roomsNumber = adForm.querySelector('#room_number');
 const guestsNumber = adForm.querySelector('#capacity');
 const adTitle = adForm.querySelector('#title');
+const adDescription = adForm.querySelector('#description');
+const errorButton = adForm.querySelector('.ad-form__reset');
 const AD_TITLE_MIN_LENGTH = 30;
 const AD_TITLE_MAX_LENGTH = 100;
 
@@ -54,7 +61,7 @@ const getActivatedForm = () => {
   addressField.setAttribute('readonly', '');
   mapFiltersForm.classList.remove('map__filters--disabled');
   mapFiltersFormFields.forEach((field) => {
-    field.setAttribute('disabled', '');
+    field.removeAttribute('disabled', '');
   });
 }
 
@@ -132,8 +139,47 @@ const onRoomsNumberChange = () => {
   })
 }
 
+onRoomsNumberChange();
 adTitle.addEventListener('input', onTitleInput);
 currentPrice.addEventListener('input', onCurrentPriceInput);
 roomsNumber.addEventListener('change', onRoomsNumberChange);
 
-export {getActivatedForm};
+// Form submit
+
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => alertMessage(errorMessageTemplate),
+      new FormData(evt.target),
+    );
+  });
+};
+
+const setUserFormClear = (onClick) => {
+  errorButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    onClick();
+  })
+};
+
+const setClearForm = () => {
+  adTitle.value = '';
+  houseTypeList.value = 'flat';
+  currentPrice.value = '';
+  getMinPriceValue();
+  roomsNumber.value = '1';
+  onRoomsNumberChange();
+  adDescription.value = '';
+  checkInTime.value = '12:00';
+  onCheckInTimeChange();
+  adFeaturesCheckboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkbox.checked = false;
+    }
+  });
+}
+
+export {getActivatedForm, setClearForm, setUserFormSubmit,setUserFormClear};
