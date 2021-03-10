@@ -1,6 +1,7 @@
 /* global L:readonly */
 import {getActivatedForm} from './user-form.js';
 import {getAdvertisement} from './popup.js';
+import {PINS_MIN_COUNT} from './data.js';
 
 const addressField = document.querySelector('#address');
 const DEFAULT_LAT = 35.6729;
@@ -56,7 +57,9 @@ mainMarker.on('moveend', () => {
 });
 
 const renderPins = (data) => {
-  data.forEach((ad) => {
+  const pins = [];
+
+  data.slice(0, PINS_MIN_COUNT).forEach((ad) => {
     const {lat, lng} = ad.location;
 
     const icon = L.icon({
@@ -83,7 +86,9 @@ const renderPins = (data) => {
           keepInView: true,
         },
       );
+    pins.push(marker);
   });
+  return pins;
 };
 
 const setDefaultCoordinates = () => {
@@ -97,9 +102,15 @@ const setDefaultCoordinates = () => {
   }, 10);
 }
 
+const clearPins = (pins) => {
+  pins.forEach((pin) => {
+    pin.remove();
+  })
+};
+
 const mapOnSubmit = () => {
   setDefaultCoordinates();
   getAdressCoordinates();
 }
 
-export {renderPins, mapOnSubmit};
+export {renderPins, mapOnSubmit, clearPins};
