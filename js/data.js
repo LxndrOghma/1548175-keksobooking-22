@@ -13,4 +13,6 @@ const PropertyType = (type) => {
   }
 }
 
-export {PropertyType};
+const PINS_MIN_COUNT = 10;
+
+export {PropertyType, PINS_MIN_COUNT};
