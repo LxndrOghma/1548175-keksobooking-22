@@ -1,6 +1,3 @@
-import {clearPins, renderPins} from './map.js';
-import {PINS_MIN_COUNT} from './data.js';
-
 const priceRange = {
   low : {
     min : 0,
@@ -27,78 +24,41 @@ const housingRooms = filterForm.querySelector('#housing-rooms');
 const housingGuests = filterForm.querySelector('#housing-guests');
 const housingFeatures = filterForm.querySelector('#housing-features');
 
-const typeFilter = (ad, filter) => (filter === 'any' || ad.offer.type == filter) ? true : false;
+const typeFilter = (ad) => (housingType.value === 'any' || ad.offer.type == housingType.value);
 
-const priceFilter = (ad, filter) =>
-  (ad.offer.price >= priceRange[filter].min && ad.offer.price < priceRange[filter].max || filter === 'any') ? true : false;
+const priceFilter = (ad) =>
+  (ad.offer.price >= priceRange[housingPrice.value].min && ad.offer.price < priceRange[housingPrice.value].max || housingPrice.value === 'any');
 
-const roomFilter = (ad, filter) => (filter === 'any' || Number(filter) === ad.offer.rooms) ? true : false;
+const roomsFilter = (ad) => (housingRooms.value === 'any' || Number(housingRooms.value) === ad.offer.rooms);
 
-const guestFilter = (ad, filter) => (filter === 'any' || Number(filter) === ad.offer.guests) ? true : false;
+const guestFilter = (ad) => (housingGuests.value === 'any' || Number(housingGuests.value) === ad.offer.guests);
 
-const featureFilter = (ad, features) => {
-  for (const feature of features) {
-    if(!ad.offer.features.includes(feature)) {
-      return false
+const featuresFilter = (data) => {
+  let value = true;
+
+  housingFeatures.querySelectorAll('input:checked').forEach((feature) => {
+    if(data.indexOf(feature.value) === -1) {
+      value = false;
     }
-  }
-  return true;
-};
+  });
 
-const filterAds = (pins, offers) => {
-  let type = 'any';
-  let price = 'any';
-  let rooms = 'any';
-  let guest = 'any';
-  let featuresList = [];
-  let filteredAd = offers;
-
-  const updatePins = () => {
-    clearPins(pins);
-    const newPins = filteredAd.length < PINS_MIN_COUNT ?
-      filteredAd : filteredAd.slice(0, PINS_MIN_COUNT);
-    pins = renderPins(newPins);
-  }
-
-  const filteringOffers = () => filteredAd = offers
-    .filter((offer) => typeFilter(offer, type))
-    .filter((offer) => priceFilter(offer, price))
-    .filter((offer) => roomFilter(offer, rooms))
-    .filter((offer) => guestFilter(offer, guest))
-    .filter((offer) => featureFilter(offer, featuresList));
-
-  housingType.addEventListener('change', (evt) => {
-    type = evt.target.value;
-    filteringOffers();
-    updatePins();
-  })
-
-  housingPrice.addEventListener('change', (evt) => {
-    price = evt.target.value;
-    filteringOffers();
-    updatePins();
-  })
-
-  housingRooms.addEventListener('change', (evt) => {
-    rooms = evt.target.value;
-    filteringOffers();
-    updatePins();
-  })
-
-  housingGuests.addEventListener('change', (evt) => {
-    guest = evt.target.value;
-    filteringOffers();
-    updatePins();
-  })
-
-  housingFeatures.addEventListener('change', () => {
-    featuresList = Array
-      .from(housingFeatures.querySelectorAll('input:checked'))
-      .map((ad) => ad.value);
-    filteringOffers();
-    updatePins();
-  })
-
+  return value;
 }
 
-export {filterAds};
+const getFilteredAds = (data) => {
+  return (
+    typeFilter(data) &&
+    priceFilter(data) &&
+    roomsFilter(data) &&
+    guestFilter(data) &&
+    featuresFilter(data.offer.features)
+  )
+}
+
+const setFilterChange = (cb) => {
+  filterForm.addEventListener('change', () => {
+    cb();
+  });
+};
+
+export {getFilteredAds, setFilterChange}

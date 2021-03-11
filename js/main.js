@@ -1,11 +1,10 @@
-import './popup.js';
-import './user-form.js';
-import './map.js';
-import { renderPins, mapOnSubmit } from './map.js';
-import { setClearForm, setUserFormSubmit, setUserFormClear} from './user-form.js';
-import { showNetworkAlert, alertMessage, successMessageTemplate} from './utils/alerts.js';
+/* global _:readonly */
+import {renderPins, mapOnSubmit, getFilteredPins} from './map.js';
+import {setClearForm, setUserFormSubmit, setUserFormClear} from './user-form.js';
+import {showNetworkAlert, alertMessage, successMessageTemplate} from './utils/alerts.js';
 import {getData} from './api.js';
-import { filterAds } from './filter.js';
+import {setFilterChange } from './filter.js';
+import {RENDER_DELAY} from './data.js';
 
 const setDefaultState = () => {
   setClearForm();
@@ -15,8 +14,8 @@ const setDefaultState = () => {
 
 getData(
   (data) => {
-    const pins = renderPins(data);
-    filterAds(pins, data);
+    renderPins(data);
+    setFilterChange(_.debounce(getFilteredPins(data), RENDER_DELAY));
   },
   () => showNetworkAlert('Не удалось получить данные с сервера, попробуйте позже.'),
 );

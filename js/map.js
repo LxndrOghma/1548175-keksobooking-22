@@ -2,6 +2,7 @@
 import {getActivatedForm} from './user-form.js';
 import {getAdvertisement} from './popup.js';
 import {PINS_MIN_COUNT} from './data.js';
+import {getFilteredAds} from './filter.js'
 
 const addressField = document.querySelector('#address');
 const DEFAULT_LAT = 35.6729;
@@ -56,39 +57,51 @@ mainMarker.on('moveend', () => {
   addressField.value = fixedCoordinates();
 });
 
+const clearPins = (pins) => {
+  pins.forEach((pin) => {
+    pin.remove();
+  })
+};
+
+let pins = [];
+
 const renderPins = (data) => {
-  const pins = [];
 
-  data.slice(0, PINS_MIN_COUNT).forEach((ad) => {
-    const {lat, lng} = ad.location;
+  clearPins(pins);
 
-    const icon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [40,40],
-      iconAnchor: [20,40],
-    })
+  data
+    .slice()
+    .filter(getFilteredAds)
+    .slice(0, PINS_MIN_COUNT)
+    .forEach((ad) => {
+      const {lat, lng} = ad.location;
 
-    const marker = L.marker(
-      {
-        lat: lat,
-        lng: lng,
-      },
-      {
-        icon,
-      },
-    );
+      const icon = L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40,40],
+        iconAnchor: [20,40],
+      })
 
-    marker
-      .addTo(map)
-      .bindPopup(
-        getAdvertisement(ad),
+      const marker = L.marker(
         {
-          keepInView: true,
+          lat: lat,
+          lng: lng,
+        },
+        {
+          icon,
         },
       );
-    pins.push(marker);
-  });
-  return pins;
+
+      marker
+        .addTo(map)
+        .bindPopup(
+          getAdvertisement(ad),
+          {
+            keepInView: true,
+          },
+        );
+      pins.push(marker);
+    });
 };
 
 const setDefaultCoordinates = () => {
@@ -102,15 +115,11 @@ const setDefaultCoordinates = () => {
   }, 10);
 }
 
-const clearPins = (pins) => {
-  pins.forEach((pin) => {
-    pin.remove();
-  })
-};
-
 const mapOnSubmit = () => {
   setDefaultCoordinates();
   getAdressCoordinates();
 }
 
-export {renderPins, mapOnSubmit, clearPins};
+const getFilteredPins = (data) => () => renderPins(data);
+
+export {renderPins, mapOnSubmit, getFilteredPins};

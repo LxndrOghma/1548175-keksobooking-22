@@ -15,4 +15,6 @@ const PropertyType = (type) => {
 
 const PINS_MIN_COUNT = 10;
 
-export {PropertyType, PINS_MIN_COUNT};
+const RENDER_DELAY = 500;
+
+export {PropertyType, PINS_MIN_COUNT, RENDER_DELAY};
