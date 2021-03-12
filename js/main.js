@@ -5,6 +5,8 @@ import {showNetworkAlert, alertMessage, successMessageTemplate} from './utils/al
 import {getData} from './api.js';
 import {setFilterChange } from './filter.js';
 import {RENDER_DELAY} from './data.js';
+import {setImagesPreview} from './images.js';
+
 
 const setDefaultState = () => {
   setClearForm();
@@ -22,3 +24,5 @@ getData(
 
 setUserFormSubmit(setDefaultState);
 setUserFormClear(setDefaultState);
+
+setImagesPreview();
