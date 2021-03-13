@@ -1,4 +1,4 @@
-import {FILE_TYPES} from './data.js';
+import {FILE_TYPES, DEFAULT_USER_AVATAR} from './data.js';
 
 const avatarFileChooser = document.querySelector('#avatar');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
@@ -9,13 +9,14 @@ const IMAGE_PREVIEW_HEIGHT = 70;
 
 const getImagePreview = () => {
   imagesFileChooser.addEventListener('change', () => {
+    imagesPreview.innerHTML = '';
     const img = document.createElement('img');
     imagesPreview.insertAdjacentElement('beforeend', img);
     img.width = IMAGE_PREVIEW_WIDTH;
     img.height = IMAGE_PREVIEW_HEIGHT;
     img.alt = 'Превью изображения';
 
-    const file = imagesFileChooser.files[0];
+    let file = imagesFileChooser.files[0];
     const fileName = file.name.toLowerCase();
 
     const matches = FILE_TYPES.some((it) => {
@@ -44,7 +45,7 @@ const getAvatarPreview = () => {
     });
 
     if (matches) {
-      const reader = new FileReader();
+      let reader = new FileReader();
 
       reader.addEventListener('load', () => {
         avatarPreview.src = reader.result;
@@ -60,6 +61,11 @@ const setImagesPreview = () => {
   getAvatarPreview();
 };
 
-export {setImagesPreview};
+const getClearedPreviews = () => {
+  avatarPreview.src = DEFAULT_USER_AVATAR;
+  imagesPreview.innerHTML = '';
+}
+
+export {setImagesPreview, getClearedPreviews};
 
 

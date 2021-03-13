@@ -61,4 +61,12 @@ const setFilterChange = (cb) => {
   });
 };
 
-export {getFilteredAds, setFilterChange}
+const setFilterReset = (cb) => {
+  filterForm.addEventListener('reset', () => {
+    setTimeout(() => {
+      cb();
+    }, 0);
+  });
+};
+
+export {getFilteredAds, setFilterChange, setFilterReset}
