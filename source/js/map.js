@@ -1,4 +1,5 @@
-/* global L:readonly */
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {getActivatedForm} from './user-form.js';
 import {getAdvertisement} from './popup.js';
 import {PINS_MIN_COUNT} from './data.js';
