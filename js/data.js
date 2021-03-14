@@ -17,4 +17,8 @@ const PINS_MIN_COUNT = 10;
 
 const RENDER_DELAY = 500;
 
-export {PropertyType, PINS_MIN_COUNT, RENDER_DELAY};
+const DEFAULT_USER_AVATAR = 'img/muffin-grey.svg'
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
+export {PropertyType, PINS_MIN_COUNT, RENDER_DELAY, FILE_TYPES, DEFAULT_USER_AVATAR};
