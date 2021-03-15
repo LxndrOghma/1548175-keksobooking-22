@@ -1,4 +1,4 @@
-/* global _:readonly */
+import _ from 'lodash';
 import {renderPins, mapOnSubmit, getFilteredPins} from './map.js';
 import {setClearForm, setUserFormSubmit, setUserFormClear} from './user-form.js';
 import {showNetworkAlert, alertMessage, successMessageTemplate} from './utils/alerts.js';
