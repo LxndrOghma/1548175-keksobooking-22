@@ -57,11 +57,14 @@ const getActivatedForm = () => {
     field.removeAttribute('disabled', '');
   });
   addressField.setAttribute('readonly', '');
+}
+
+const getActivatedFilters = () => {
   mapFiltersForm.classList.remove('map__filters--disabled');
   mapFiltersFormFields.forEach((field) => {
     field.removeAttribute('disabled', '');
   });
-}
+};
 
 // Check in and check out fields link
 
@@ -171,4 +174,4 @@ const setClearForm = () => {
   getClearedPreviews();
 }
 
-export {getActivatedForm, setClearForm, setUserFormSubmit,setUserFormClear};
+export {getActivatedForm, setClearForm, setUserFormSubmit, setUserFormClear, getActivatedFilters};
