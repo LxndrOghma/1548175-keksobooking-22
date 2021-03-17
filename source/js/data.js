@@ -1,3 +1,8 @@
+const PINS_MIN_COUNT = 10;
+const RENDER_DELAY = 500;
+const DEFAULT_USER_AVATAR = 'img/muffin-grey.svg'
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const PropertyType = (type) => {
   switch (type) {
     case 'palace':
@@ -12,13 +17,5 @@ const PropertyType = (type) => {
       return 'Недвижимость';
   }
 }
-
-const PINS_MIN_COUNT = 10;
-
-const RENDER_DELAY = 500;
-
-const DEFAULT_USER_AVATAR = 'img/muffin-grey.svg'
-
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 export {PropertyType, PINS_MIN_COUNT, RENDER_DELAY, FILE_TYPES, DEFAULT_USER_AVATAR};

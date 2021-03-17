@@ -2,6 +2,9 @@ import {sendData} from './api.js';
 import {getClearedPreviews} from './images.js';
 import {alertMessage, errorMessageTemplate} from './utils/alerts.js';
 
+const AD_TITLE_MIN_LENGTH = 30;
+const AD_TITLE_MAX_LENGTH = 100;
+
 const adForm = document.querySelector('.ad-form');
 const adFormFields = adForm.querySelectorAll('fieldset');
 const mapFiltersForm = document.querySelector('.map__filters');
@@ -15,8 +18,6 @@ const roomsNumber = adForm.querySelector('#room_number');
 const guestsNumber = adForm.querySelector('#capacity');
 const adTitle = adForm.querySelector('#title');
 const errorButton = adForm.querySelector('.ad-form__reset');
-const AD_TITLE_MIN_LENGTH = 30;
-const AD_TITLE_MAX_LENGTH = 100;
 
 const minPrice = {
   palace: 10000,

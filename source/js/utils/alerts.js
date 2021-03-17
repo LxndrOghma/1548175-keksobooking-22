@@ -1,6 +1,7 @@
 import {isEscEvent} from './events.js';
 
 const ALERT_SHOW_TIME = 5000;
+
 const page = document.querySelector('main');
 const successMessageTemplate = document.querySelector('#success')
   .content

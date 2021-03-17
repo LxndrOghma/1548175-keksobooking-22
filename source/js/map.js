@@ -5,9 +5,10 @@ import {getAdvertisement} from './popup.js';
 import {PINS_MIN_COUNT} from './data.js';
 import {getFilteredAds} from './filter.js'
 
-const addressField = document.querySelector('#address');
 const DEFAULT_LAT = 35.6729;
 const DEFAULT_LNG = 139.7564;
+
+const addressField = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', getActivatedForm)
@@ -64,7 +65,7 @@ const clearPins = (pins) => {
   })
 };
 
-let pins = [];
+const pins = [];
 
 const renderPins = (data) => {
 
