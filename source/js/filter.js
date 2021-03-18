@@ -24,7 +24,7 @@ const housingRooms = filterForm.querySelector('#housing-rooms');
 const housingGuests = filterForm.querySelector('#housing-guests');
 const housingFeatures = filterForm.querySelector('#housing-features');
 
-const typeFilter = (ad) => (housingType.value === 'any' || ad.offer.type == housingType.value);
+const typeFilter = (ad) => (housingType.value === 'any' || ad.offer.type === housingType.value);
 
 const priceFilter = (ad) =>
   (ad.offer.price >= priceRange[housingPrice.value].min && ad.offer.price < priceRange[housingPrice.value].max || housingPrice.value === 'any');
